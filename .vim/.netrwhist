@@ -1,8 +1,9 @@
 let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
+let g:netrw_dirhist_cnt =7
 let g:netrw_dirhist_1='/home/kuri/estate2/app/views/admin/dashboards'
 let g:netrw_dirhist_2='/home/kuri/estate2/vendor/plugins/acts_as_list/lib/active_record'
 let g:netrw_dirhist_3='/home/kuri/estate2/vendor/plugins/acts_as_image_uploads'
 let g:netrw_dirhist_4='/home/kuri/estate2/vendor/plugins/acts_as_image_uploadable/test'
 let g:netrw_dirhist_5='/home/kuri/estate2/app/views/information_events'
 let g:netrw_dirhist_6='/home/kuri/estate2/vendor/plugins/acts_as_image_uploadable/test'
+let g:netrw_dirhist_7='/home/kuri/.vim'

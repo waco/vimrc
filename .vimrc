@@ -1,3 +1,47 @@
+"----------------------------------------------
+"plugin
+"----------------------------------------------
+"pathogen.vim
+"pathogenでftdetectなどをloadさせるために一度ファイルタイプ判定をoff
+filetype off
+"pathogen.vimによってbundle配下のpluginをpathに加える
+call pathogen#runtime_append_all_bundles()
+call pathogen#helptags()
+set helpfile=$VIMRUNTIME/doc/help.txt
+"ファイルタイプ判定をon
+filetype plugin on
+
+"surround.vim
+"s, ssで選択範囲を指定文字でくくる
+nmap s <Plug>Ysurround
+nmap ss <Plug>Yssurround
+
+
+"neocomplcache.vim
+" Disable AutoComplPop.
+let g:acp_enableAtStartup = 0
+" Use neocomplcache.
+let g:neocomplcache_enable_at_startup = 1
+" Use smartcase.
+let g:neocomplcache_enable_smart_case = 1
+" Use camel case completion.
+let g:neocomplcache_enable_camel_case_completion = 1
+" Use underbar completion.
+let g:neocomplcache_enable_underbar_completion = 1
+" Set minimum syntax keyword length.
+let g:neocomplcache_min_syntax_length = 3
+let g:neocomplcache_lock_buffer_name_pattern = '\*ku\*'
+
+" Define keyword.
+if !exists('g:neocomplcache_keyword_patterns')
+    let g:neocomplcache_keyword_patterns = {}
+endif
+let g:neocomplcache_keyword_patterns['default'] = '\h\w*'
+
+
+"----------------------------------------------
+"option
+"----------------------------------------------
 "色分けオプション
 set term=builtin_linux
 set ttytype=builtin_linux
@@ -17,14 +61,6 @@ set hlsearch
 "全角記号対策
 set ambiwidth=double
 
-"表示行単位で行移動する
-map <up> gk
-map <down> gj
-nmap k gk
-nmap j gj
-vmap k gk
-vmap j gj
-
 "カーソルライン
 set cursorline
 "コマンド実行時などに自動保存
@@ -34,6 +70,24 @@ set hidden
 "ステータスラインを常に表示
 set laststatus=2
 
+
+"----------------------------------------------
+"short cut
+"----------------------------------------------
+"表示行単位で行移動する
+map <up> gk
+map <down> gj
+nmap k gk
+nmap j gj
+vmap k gk
+vmap j gj
+
+"Escの2回押しでハイライト消去
+nmap <ESC><ESC> :noh<CR><ESC>
+
+"----------------------------------------------
+"status bar
+"----------------------------------------------
 function! GetB()
   let c = matchstr(getline('.'), '.', col('.') - 1)
   let c = iconv(c, &enc, &fenc)
@@ -41,7 +95,7 @@ function! GetB()
 endfunction
 " :help eval-examples
 " The function Nr2Hex() returns the Hex string of a number.
- func! Nr2Hex(nr)
+function! Nr2Hex(nr)
    let n = a:nr
      let r = ""
   while n
@@ -49,10 +103,10 @@ endfunction
     let n = n / 16
   endwhile
   return r
-endfunc
+endfunction
 " The function String2Hex() converts each character in a string to a two
 " character Hex string.
-func! String2Hex(str)
+function! String2Hex(str)
   let out = ''
   let ix = 0
   while ix < strlen(a:str)
@@ -60,7 +114,7 @@ func! String2Hex(str)
     let ix = ix + 1
   endwhile
   return out
-endfunc
+endfunction
 
 if winwidth(0) >= 120
   set statusline=%<[%n]%m%r%h%w%{'['.(&fenc!=''?&fenc:&enc).':'.&ff.']'}%y\ %F%=[%{GetB()}]\ %l,%c%V%8P
@@ -89,4 +143,14 @@ function InsertTabWrapper()
   endif 
 endfunction 
 inoremap <tab> <c-r>=InsertTabWrapper()<cr> 
+
+"----------------------------------------------
+"before save
+"----------------------------------------------
+"保存時に行末スペースの削除
+autocmd BufWritePre *.php,*.rb,*.erb,*.as,*.js,*.html :%s/\s\+$//ge
+"保存時にtabをスペースに変換する
+autocmd BufWritePre *.php,*.rb,*.erb,*.as,*.js,*.html :%s/\t/  /ge
+
+
 
